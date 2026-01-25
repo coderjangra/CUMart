@@ -1,0 +1,74 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: "Segoe UI", system-ui, -apple-system, sans-serif;
+  background: #f1f5f9;
+  color: #0f172a;
+}
+
+/* ---------- Top Header ---------- */
+
+.top-header {
+  background: #ffffff;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.top-header-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 24px 32px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.brand-name {
+  font-size: 28px;
+  font-weight: 800;
+  color: #4f46e5;
+  line-height: 1.1;
+  display: block;
+}
+
+.brand-sub {
+  margin-top: 10px;
+  font-size: 14px;
+  line-height: 1.6;
+  color: #64748b;
+}
+
+.top-actions {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.user-pill {
+  width: 36px;
+  height: 36px;
+  background: #6366f1;
+  color: #ffffff;
+  font-weight: 700;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.username {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.logout-btn {
+  background: #ef4444;
+  color: #ffffff;
+  border: none;
+  padding: 10px 18px;
+  border-radius: 10px;
+  font-weight: 600;
+  cursor: pointer;
+}
