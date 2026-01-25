@@ -7,19 +7,19 @@ const productsSlice = createSlice({
       id: 1,
       name: "Laptop",
       price: 50000,
-      image: "/images/laptop.jpg"
+      image: `${process.env.PUBLIC_URL}/images/laptop.jpg`
     },
     {
       id: 2,
       name: "Smartphone",
       price: 30000,
-      image: "/images/phone.jpg"
+      image: `${process.env.PUBLIC_URL}/images/phone.jpg`
     },
     {
       id: 3,
       name: "Headphones",
       price: 2000,
-      image: "/images/headphone.jpg"
+      image: `${process.env.PUBLIC_URL}/images/headphone.jpg`
     }
   ],
   reducers: {}
