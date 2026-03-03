@@ -1,4 +1,5 @@
 # 🛒 CUMart
+# AVAILABLE AT: https://coderjangra.github.io/CUMart/
 
 **CUMart** is a streamlined, React-powered shopping application tailored for campus ecosystems. This project demonstrates a hybrid state management strategy, utilizing **Redux Toolkit** for complex data flows and the **Context API** for lightweight user sessions.
 
