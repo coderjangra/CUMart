@@ -1,3 +1,107 @@
+/* =============================================
+   THEME TOKENS
+   ============================================= */
+
+:root {
+  /* ── Light mode ── warm cream + emerald + amber */
+  --bg-base:        #f5f0eb;
+  --bg-layer:       rgba(255, 251, 246, 0.72);
+  --bg-layer-solid: #fffbf6;
+  --bg-sidebar:     rgba(255, 251, 246, 0.88);
+  --bg-card:        rgba(255, 251, 246, 0.68);
+  --bg-input:       rgba(255, 255, 255, 0.85);
+  --bg-badge:       rgba(255, 255, 255, 0.4);
+
+  --text-primary:   #1a1208;
+  --text-secondary: #5c4a2a;
+  --text-muted:     #9c8660;
+
+  --border:         rgba(16, 185, 129, 0.22);
+  --border-soft:    rgba(0, 0, 0, 0.07);
+  --border-item:    rgba(0, 0, 0, 0.05);
+
+  --glass-blur:     18px;
+  --glass-blur-lg:  28px;
+
+  --shadow-card:    0 4px 24px rgba(16, 185, 129, 0.10), 0 1px 4px rgba(0,0,0,0.04);
+  --shadow-card-hv: 0 16px 48px rgba(16, 185, 129, 0.18), 0 4px 12px rgba(0,0,0,0.08);
+  --shadow-sidebar: -8px 0 48px rgba(0, 0, 0, 0.10), -2px 0 8px rgba(0,0,0,0.04);
+
+  /* Brand = emerald */
+  --brand:          #059669;
+  --brand-light:    #10b981;
+  --brand-glow:     rgba(16, 185, 129, 0.32);
+
+  /* Accent = amber */
+  --accent:         #d97706;
+  --accent-light:   #f59e0b;
+  --accent-glow:    rgba(245, 158, 11, 0.35);
+
+  --price-color:    #d97706;
+
+  --red:            #dc2626;
+  --red-bg:         rgba(220, 38, 38, 0.07);
+  --red-border:     rgba(220, 38, 38, 0.22);
+
+  --success-bg:     rgba(209, 250, 229, 0.9);
+  --success-text:   #065f46;
+
+  /* Gradients */
+  --hero-gradient:  linear-gradient(135deg, #065f46 0%, #059669 50%, #10b981 100%);
+  --page-gradient:  linear-gradient(150deg, #f5f0eb 0%, #ecfdf5 45%, #fffbeb 100%);
+  --login-gradient: linear-gradient(135deg, #064e3b 0%, #065f46 40%, #047857 70%, #92400e 100%);
+}
+
+[data-theme="dark"] {
+  /* ── Dark mode ── true near-black + cyan/teal */
+  --bg-base:        #060809;
+  --bg-layer:       rgba(8, 12, 16, 0.82);
+  --bg-layer-solid: #0a0e12;
+  --bg-sidebar:     rgba(6, 9, 12, 0.94);
+  --bg-card:        rgba(255, 255, 255, 0.038);
+  --bg-input:       rgba(255, 255, 255, 0.055);
+  --bg-badge:       rgba(255, 255, 255, 0.07);
+
+  --text-primary:   #e8f4f0;
+  --text-secondary: #7fb3a5;
+  --text-muted:     #3d6b5f;
+
+  --border:         rgba(20, 184, 166, 0.22);
+  --border-soft:    rgba(255, 255, 255, 0.06);
+  --border-item:    rgba(255, 255, 255, 0.05);
+
+  --shadow-card:    0 4px 32px rgba(0, 0, 0, 0.6), 0 1px 4px rgba(0,0,0,0.4);
+  --shadow-card-hv: 0 16px 56px rgba(0, 0, 0, 0.7), 0 0 0 1px rgba(20,184,166,0.15);
+  --shadow-sidebar: -8px 0 48px rgba(0, 0, 0, 0.7);
+
+  /* Brand = teal/cyan */
+  --brand:          #14b8a6;
+  --brand-light:    #2dd4bf;
+  --brand-glow:     rgba(20, 184, 166, 0.30);
+
+  /* Accent = amber (stays warm) */
+  --accent:         #f59e0b;
+  --accent-light:   #fbbf24;
+  --accent-glow:    rgba(245, 158, 11, 0.28);
+
+  --price-color:    #34d399;
+
+  --red:            #f87171;
+  --red-bg:         rgba(248, 113, 113, 0.08);
+  --red-border:     rgba(248, 113, 113, 0.20);
+
+  --success-bg:     rgba(6, 78, 59, 0.55);
+  --success-text:   #34d399;
+
+  --hero-gradient:  linear-gradient(135deg, #042f2e 0%, #0f4c45 50%, #134e4a 100%);
+  --page-gradient:  linear-gradient(150deg, #060809 0%, #060d0c 45%, #07090b 100%);
+  --login-gradient: linear-gradient(135deg, #030706 0%, #042f2e 40%, #0f4c45 80%, #1c1500 100%);
+}
+
+/* =============================================
+   RESET & BASE
+   ============================================= */
+
 * {
   box-sizing: border-box;
 }
@@ -5,39 +109,57 @@
 body {
   margin: 0;
   font-family: "Segoe UI", system-ui, -apple-system, sans-serif;
-  background: #f1f5f9;
-  color: #0f172a;
+  background: var(--bg-base);
+  background-image: var(--page-gradient);
+  background-attachment: fixed;
+  color: var(--text-primary);
+  transition: background 0.4s ease, color 0.3s ease;
+  min-height: 100vh;
 }
 
-/* ---------- Top Header ---------- */
+button {
+  cursor: pointer;
+}
+
+/* =============================================
+   TOP HEADER — GLASS
+   ============================================= */
 
 .top-header {
-  background: #ffffff;
-  border-bottom: 1px solid #e5e7eb;
+  background: var(--bg-layer);
+  backdrop-filter: blur(var(--glass-blur-lg)) saturate(200%);
+  -webkit-backdrop-filter: blur(var(--glass-blur-lg)) saturate(200%);
+  border-bottom: 1px solid var(--border);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  transition: background 0.3s ease, border-color 0.3s ease;
 }
 
 .top-header-inner {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 24px 32px;
+  padding: 15px 32px;
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
 
 .brand-name {
-  font-size: 28px;
+  font-size: 26px;
   font-weight: 800;
-  color: #4f46e5;
+  color: var(--brand);
   line-height: 1.1;
   display: block;
+  letter-spacing: -0.6px;
 }
 
 .brand-sub {
-  margin-top: 10px;
-  font-size: 14px;
-  line-height: 1.6;
-  color: #64748b;
+  font-size: 12px;
+  color: var(--text-muted);
+  margin-top: 3px;
+  display: block;
+  letter-spacing: 0.02em;
 }
 
 .top-actions {
@@ -49,26 +171,102 @@ body {
 .user-pill {
   width: 36px;
   height: 36px;
-  background: #6366f1;
-  color: #ffffff;
+  background: linear-gradient(135deg, var(--brand), var(--brand-light));
+  color: #fff;
   font-weight: 700;
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-shrink: 0;
+  box-shadow: 0 0 0 3px var(--brand-glow), 0 2px 8px rgba(0,0,0,0.2);
+  font-size: 15px;
 }
 
 .username {
   font-size: 14px;
   font-weight: 600;
+  color: var(--text-primary);
 }
 
+/* =============================================
+   DARK MODE TOGGLE
+   ============================================= */
+
+.theme-toggle {
+  position: relative;
+  width: 54px;
+  height: 28px;
+  flex-shrink: 0;
+}
+
+.theme-toggle input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+  position: absolute;
+}
+
+.theme-toggle-track {
+  position: absolute;
+  inset: 0;
+  background: var(--bg-badge);
+  border: 1.5px solid var(--border);
+  border-radius: 14px;
+  cursor: pointer;
+  transition: background 0.3s ease, border-color 0.3s ease;
+  display: flex;
+  align-items: center;
+  padding: 0 4px;
+}
+
+.theme-toggle input:checked + .theme-toggle-track {
+  background: #0f4c45;
+  border-color: var(--brand);
+}
+
+.theme-toggle-thumb {
+  width: 20px;
+  height: 20px;
+  background: #fff;
+  border-radius: 50%;
+  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.3);
+  transition: transform 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  line-height: 1;
+}
+
+.theme-toggle input:checked + .theme-toggle-track .theme-toggle-thumb {
+  transform: translateX(26px);
+}
+
+/* =============================================
+   LOGOUT BUTTON
+   ============================================= */
+
 .logout-btn {
-  background: #ef4444;
-  color: #ffffff;
-  border: none;
-  padding: 10px 18px;
+  background: var(--red-bg);
+  color: var(--red);
+  border: 1.5px solid var(--red-border);
+  padding: 8px 18px;
   border-radius: 10px;
   font-weight: 600;
+  font-size: 13px;
   cursor: pointer;
+  transition: background 0.2s ease, transform 0.15s ease, box-shadow 0.2s ease, color 0.2s ease;
+}
+
+.logout-btn:hover {
+  background: var(--red);
+  color: #fff;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 18px rgba(220, 38, 38, 0.3);
+}
+
+.logout-btn:focus-visible {
+  outline: 3px solid var(--red-border);
+  outline-offset: 2px;
 }

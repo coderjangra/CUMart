@@ -1,11 +1,16 @@
 import { useDispatch, useSelector } from "react-redux";
 import { addToCart } from "./cartSlice";
+import { setSearchQuery, setCategory, selectFilteredProducts, selectCategories } from "./productsSlice";
 import { useState } from "react";
 import "./Products.css";
 
 function Products({ openCart }) {
-  const products = useSelector(state => state.products);
   const dispatch = useDispatch();
+  const products = useSelector(selectFilteredProducts);
+  const categories = useSelector(selectCategories);
+  const searchQuery = useSelector(state => state.products.searchQuery);
+  const selectedCategory = useSelector(state => state.products.selectedCategory);
+  const cartCount = useSelector(state => state.cart.reduce((sum, i) => sum + i.qty, 0));
   const [toast, setToast] = useState("");
 
   const addItem = (product) => {
@@ -23,30 +28,55 @@ function Products({ openCart }) {
         </div>
 
         <button className="hero-cart-btn" onClick={openCart}>
-          🛒 Open Cart
+          Cart
+          {cartCount > 0 && <span className="cart-badge">{cartCount}</span>}
         </button>
       </div>
 
       <div className="products-container">
-        <div className="products-grid">
-          {products.map(product => (
-            <div className="product-card" key={product.id}>
-              <div className="image-wrap">
-                <img src={product.image} alt={product.name} />
-              </div>
+        <div className="products-filters">
+          <input
+            className="search-input"
+            type="search"
+            placeholder="Search products..."
+            value={searchQuery}
+            onChange={e => dispatch(setSearchQuery(e.target.value))}
+          />
 
-              <h3>{product.name}</h3>
-              <p className="price">₹{product.price}</p>
-
+          <div className="category-tabs">
+            {categories.map(cat => (
               <button
-                className="add-btn"
-                onClick={() => addItem(product)}
+                key={cat}
+                className={`cat-tab ${selectedCategory === cat ? "active" : ""}`}
+                onClick={() => dispatch(setCategory(cat))}
               >
-                Add to Cart
+                {cat}
               </button>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
+
+        {products.length === 0 ? (
+          <div className="no-results">No products match your search.</div>
+        ) : (
+          <div className="products-grid">
+            {products.map(product => (
+              <div className="product-card" key={product.id}>
+                <div className="image-wrap">
+                  <img src={product.image} alt={product.name} />
+                </div>
+
+                <span className="product-category">{product.category}</span>
+                <h3>{product.name}</h3>
+                <p className="price">&#8377;{product.price.toLocaleString("en-IN")}</p>
+
+                <button className="add-btn" onClick={() => addItem(product)}>
+                  Add to Cart
+                </button>
+              </div>
+            ))}
+          </div>
+        )}
       </div>
 
       {toast && <div className="toast">{toast}</div>}
