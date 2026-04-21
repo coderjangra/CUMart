@@ -78,11 +78,11 @@ function Cart({ isOpen, closeCart }) {
                         </Box>
                         
                         <Box display="flex" justifyContent="space-between" alignItems="center" mt={2}>
-                          <Box display="flex" alignItems="center" gap={1} border="1px solid" borderColor="divider" borderRadius={2} p={0.5}>
+                          <Box display="flex" flexDirection="row" alignItems="center" gap={1} border="1px solid" borderColor="divider" borderRadius={2} p={0.5} sx={{ flexShrink: 0 }}>
                             <IconButton size="small" onClick={() => dispatch(decrementQty(item.id))}>
                               <RemoveIcon fontSize="small" />
                             </IconButton>
-                            <Typography color="text.primary" minWidth={30} textAlign="center" fontWeight="600">{item.qty}</Typography>
+                            <Typography color="text.primary" minWidth={30} textAlign="center" fontWeight="600" sx={{ display: 'inline-block' }}>{item.qty}</Typography>
                             <IconButton size="small" onClick={() => dispatch(addToCart(item))}>
                               <AddIcon fontSize="small" />
                             </IconButton>
@@ -91,8 +91,7 @@ function Cart({ isOpen, closeCart }) {
                           <IconButton color="error" onClick={() => dispatch(removeFromCart(item.id))} sx={{ '&:hover': { bgcolor: 'error.light', color: 'error.main' } }}>
                             <DeleteIcon />
                           </IconButton>
-                        </Box>
-                      </Box>
+                        </Box>                      </Box>
                     </Box>
                     <Divider sx={{ mt: 5 }} />
                   </ListItem>

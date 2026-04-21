@@ -72,7 +72,7 @@ function AppContent({ toggleTheme, mode }) {
                 <Avatar sx={{ bgcolor: 'text.primary', color: 'background.default', width: 28, height: 28, fontSize: '0.85rem', fontWeight: 700 }}>
                   {userName.charAt(0).toUpperCase()}
                 </Avatar>
-                <Typography variant="body2" fontWeight="600" color="text.primary" sx={{ display: 'flex', alignItems: 'center', height: '100%', mt: '2px' }}>
+                <Typography variant="body2" fontWeight="600" color="text.primary">
                   {userName}
                 </Typography>
               </Box>              
