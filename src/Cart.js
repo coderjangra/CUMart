@@ -20,86 +20,116 @@ function Cart({ isOpen, closeCart }) {
     setTimeout(() => {
       setOrdered(false);
       closeCart();
-    }, 2000);
+    }, 2500);
   };
 
   return (
     <>
-      <Drawer anchor="right" open={isOpen} onClose={closeCart}>
-        <Box sx={{ width: { xs: '100vw', sm: 400 }, display: 'flex', flexDirection: 'column', height: '100%' }}>
-          <Box p={2} display="flex" justifyContent="space-between" alignItems="center">
-            <Typography variant="h6" fontWeight="bold">Your Cart</Typography>
-            <IconButton onClick={closeCart}>
-              <CloseIcon />
-            </IconButton>
-          </Box>
-          <Divider />
+      <Drawer 
+        anchor="right" 
+        open={isOpen} 
+        onClose={closeCart}
+        PaperProps={{
+          sx: {
+            width: { xs: '100%', sm: 500 },
+          }
+        }}
+      >
+        <Box p={5} pb={3} display="flex" justifyContent="space-between" alignItems="center">
+          <Typography variant="h4" color="text.primary">Your Bag</Typography>
+          <IconButton onClick={closeCart}>
+            <CloseIcon />
+          </IconButton>
+        </Box>
+        <Divider />
 
-          <Box flexGrow={1} overflow="auto" p={2}>
-            {cart.length === 0 ? (
-              <Box display="flex" flexDirection="column" alignItems="center" justifyContent="center" height="100%">
-                <Typography variant="body1" color="text.secondary">Your cart is empty.</Typography>
-                <Button variant="outlined" sx={{ mt: 2 }} onClick={closeCart}>Continue Shopping</Button>
-              </Box>
-            ) : (
-              <List disablePadding>
-                {cart.map(item => (
-                  <ListItem key={item.id} disablePadding sx={{ mb: 2 }}>
-                    <Box display="flex" width="100%" gap={2} border="1px solid" borderColor="divider" p={2} borderRadius={2}>
-                      <CardMedia 
-                        component="img" 
-                        image={item.image} 
-                        sx={{ width: 80, height: 80, borderRadius: 1, objectFit: 'cover' }} 
-                      />
-                      <Box flexGrow={1} display="flex" flexDirection="column" justifyContent="space-between">
-                        <Box display="flex" justifyContent="space-between">
-                          <Typography variant="subtitle1" fontWeight="bold">{item.name}</Typography>
-                          <IconButton size="small" color="error" onClick={() => dispatch(removeFromCart(item.id))}>
-                            <DeleteIcon />
-                          </IconButton>
-                        </Box>
-                        <Box display="flex" justifyContent="space-between" alignItems="center">
-                          <Typography variant="body1" color="primary" fontWeight="bold">
-                            ₹{(item.price * item.qty).toLocaleString("en-IN")}
-                          </Typography>
-                          <Box display="flex" alignItems="center" border="1px solid" borderColor="divider" borderRadius={1}>
-                            <IconButton size="small" onClick={() => dispatch(decrementQty(item.id))}>
-                              <RemoveIcon fontSize="small" />
-                            </IconButton>
-                            <Typography sx={{ px: 1 }}>{item.qty}</Typography>
-                            <IconButton size="small" onClick={() => dispatch(addToCart(item))}>
-                              <AddIcon fontSize="small" />
-                            </IconButton>
-                          </Box>
-                        </Box>
-                      </Box>
-                    </Box>
-                  </ListItem>
-                ))}
-              </List>
-            )}
-          </Box>
-
-          {cart.length > 0 && (
-            <Box p={2} borderTop="1px solid" borderColor="divider">
-              <Box display="flex" justifyContent="space-between" mb={2}>
-                <Typography variant="h6">Total</Typography>
-                <Typography variant="h6" fontWeight="bold">₹{total.toLocaleString("en-IN")}</Typography>
-              </Box>
-              <Button variant="contained" color="primary" fullWidth size="large" onClick={handleOrder} sx={{ mb: 1 }}>
-                Checkout
-              </Button>
-              <Button variant="outlined" color="error" fullWidth onClick={() => dispatch(clearCart())}>
-                Clear Cart
+        <Box flexGrow={1} overflow="auto" p={5}>
+          {cart.length === 0 ? (
+            <Box display="flex" flexDirection="column" alignItems="center" justifyContent="center" height="100%">
+              <Typography variant="h1" mb={4} sx={{ opacity: 0.2 }}>🛍️</Typography>
+              <Typography variant="h5" color="text.primary" mb={2}>Your bag is empty.</Typography>
+              <Typography variant="body1" color="text.secondary" textAlign="center" mb={6}>
+                When you add products, they'll appear here.
+              </Typography>
+              <Button variant="contained" color="primary" onClick={closeCart} size="large">
+                Continue Shopping
               </Button>
             </Box>
+          ) : (
+            <List disablePadding>
+              {cart.map(item => (
+                <ListItem key={item.id} disablePadding sx={{ flexDirection: 'column', alignItems: 'stretch', mb: 5 }}>
+                  <Box display="flex" gap={3}>
+                    <Box sx={{ width: 100, height: 100, borderRadius: 3, overflow: 'hidden', bgcolor: 'background.default', flexShrink: 0, border: '1px solid', borderColor: 'divider' }}>
+                      <CardMedia component="img" image={item.image} alt={item.name} sx={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                    </Box>
+                    
+                    <Box flexGrow={1} display="flex" flexDirection="column" justifyContent="space-between">
+                      <Box display="flex" justifyContent="space-between" alignItems="flex-start">
+                        <Box pr={2}>
+                          <Typography variant="h6" color="text.primary" lineHeight={1.2} mb={1}>{item.name}</Typography>
+                          <Typography variant="body2" color="text.secondary">₹{item.price.toLocaleString("en-IN")} each</Typography>
+                        </Box>
+                        <Typography variant="h6" color="text.primary">
+                          ₹{(item.price * item.qty).toLocaleString("en-IN")}
+                        </Typography>
+                      </Box>
+                      
+                      <Box display="flex" justifyContent="space-between" alignItems="center" mt={2}>
+                        <Box display="flex" alignItems="center" gap={1} border="1px solid" borderColor="divider" borderRadius={2} p={0.5}>
+                          <IconButton size="small" onClick={() => dispatch(decrementQty(item.id))}>
+                            <RemoveIcon fontSize="small" />
+                          </IconButton>
+                          <Typography color="text.primary" minWidth={30} textAlign="center" fontWeight="600">{item.qty}</Typography>
+                          <IconButton size="small" onClick={() => dispatch(addToCart(item))}>
+                            <AddIcon fontSize="small" />
+                          </IconButton>
+                        </Box>
+
+                        <IconButton color="error" onClick={() => dispatch(removeFromCart(item.id))} sx={{ '&:hover': { bgcolor: 'error.light', color: 'error.main' } }}>
+                          <DeleteIcon />
+                        </IconButton>
+                      </Box>
+                    </Box>
+                  </Box>
+                  <Divider sx={{ mt: 5 }} />
+                </ListItem>
+              ))}
+            </List>
           )}
         </Box>
+
+        {cart.length > 0 && (
+          <Box p={5} borderTop="1px solid" borderColor="divider" bgcolor="background.paper">
+            <Box display="flex" justifyContent="space-between" alignItems="center" mb={4}>
+              <Typography variant="h5" color="text.secondary">Total</Typography>
+              <Typography variant="h3" color="text.primary">₹{total.toLocaleString("en-IN")}</Typography>
+            </Box>
+            <Button variant="contained" color="primary" fullWidth size="large" onClick={handleOrder} sx={{ mb: 2 }}>
+              Checkout
+            </Button>
+            <Button variant="outlined" color="primary" fullWidth size="large" onClick={() => dispatch(clearCart())}>
+              Clear Bag
+            </Button>
+          </Box>
+        )}
       </Drawer>
 
       <Snackbar open={ordered} autoHideDuration={3000} anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}>
-        <Alert severity="success" variant="filled">
-          Order placed successfully!
+        <Alert 
+          icon={false}
+          severity="success" 
+          sx={{ 
+            bgcolor: 'text.primary', 
+            color: 'background.default', 
+            borderRadius: 4, 
+            boxShadow: '0 20px 40px rgba(0,0,0,0.2)',
+            px: 4, py: 2,
+            alignItems: 'center',
+          }}
+        >
+          <Typography variant="h6" gutterBottom>Order Confirmed</Typography>
+          <Typography variant="body2" color="background.paper">Thank you for shopping with CUMart.</Typography>
         </Alert>
       </Snackbar>
     </>

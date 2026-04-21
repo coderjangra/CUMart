@@ -5,7 +5,7 @@ import Products from "./Products";
 import Cart from "./Cart";
 import { AppBar, Toolbar, Typography, Box, IconButton, Avatar, Tooltip, Container, ThemeProvider, CssBaseline, Badge } from "@mui/material";
 import LogoutIcon from '@mui/icons-material/Logout';
-import StorefrontIcon from '@mui/icons-material/Storefront';
+import ShoppingBagOutlinedIcon from '@mui/icons-material/ShoppingBagOutlined';
 import DarkModeIcon from '@mui/icons-material/DarkMode';
 import LightModeIcon from '@mui/icons-material/LightMode';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
@@ -14,7 +14,7 @@ import { useSelector } from "react-redux";
 
 function ThemeWrapper({ children }) {
   const [mode, setMode] = useState(() => {
-    return localStorage.getItem('cumart-theme-mode') || 'light';
+    return localStorage.getItem('cumart-theme-mode') || 'dark'; // Defaulting to dark as requested
   });
 
   useEffect(() => {
@@ -41,40 +41,44 @@ function AppContent({ toggleTheme, mode }) {
 
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
-      <AppBar position="sticky" color="inherit" elevation={1}>
+      <AppBar position="sticky">
         <Container maxWidth="xl">
           <Toolbar disableGutters sx={{ justifyContent: 'space-between' }}>
-            {/* Logo */}
-            <Box display="flex" alignItems="center" gap={1}>
-              <StorefrontIcon color="primary" fontSize="large" />
-              <Typography variant="h5" fontWeight="bold" color="primary">
-                CUMart
+            <Box display="flex" alignItems="center" gap={1.5}>
+              <Box sx={{ bgcolor: 'text.primary', color: 'background.default', p: 1, borderRadius: 3, display: 'flex' }}>
+                <ShoppingBagOutlinedIcon />
+              </Box>
+              <Typography variant="h4" color="text.primary">
+                CUMart.
               </Typography>
             </Box>
 
-            {/* Actions */}
-            <Box display="flex" alignItems="center" gap={2}>
-              <IconButton onClick={toggleTheme} color="inherit">
-                {mode === 'dark' ? <LightModeIcon /> : <DarkModeIcon />}
-              </IconButton>
+            <Box display="flex" alignItems="center" gap={3}>
+              <Tooltip title="Toggle Theme">
+                <IconButton onClick={toggleTheme}>
+                  {mode === 'dark' ? <LightModeIcon /> : <DarkModeIcon />}
+                </IconButton>
+              </Tooltip>
 
-              <IconButton onClick={() => setCartOpen(true)} color="inherit">
-                <Badge badgeContent={cartCount} color="error">
-                  <ShoppingCartIcon />
-                </Badge>
-              </IconButton>
+              <Tooltip title="View Cart">
+                <IconButton onClick={() => setCartOpen(true)}>
+                  <Badge badgeContent={cartCount} color="error">
+                    <ShoppingCartIcon />
+                  </Badge>
+                </IconButton>
+              </Tooltip>
 
-              <Box display="flex" alignItems="center" gap={1} ml={1}>
-                <Avatar sx={{ width: 32, height: 32, bgcolor: 'primary.main' }}>
+              <Box display="flex" alignItems="center" gap={1.5} sx={{ display: { xs: 'none', sm: 'flex' }, py: 0.5, px: 2, bgcolor: 'action.hover', borderRadius: '50px', border: '1px solid', borderColor: 'divider' }}>
+                <Avatar sx={{ bgcolor: 'text.primary', color: 'background.default', width: 28, height: 28, fontSize: '0.85rem', fontWeight: 700 }}>
                   {userName.charAt(0).toUpperCase()}
                 </Avatar>
-                <Typography variant="body1" sx={{ display: { xs: 'none', sm: 'block' } }}>
+                <Typography variant="body2" fontWeight="600" color="text.primary">
                   {userName}
                 </Typography>
               </Box>
               
-              <Tooltip title="Logout">
-                <IconButton onClick={logout} color="error">
+              <Tooltip title="Sign Out">
+                <IconButton onClick={logout} sx={{ color: 'text.secondary', '&:hover': { color: 'error.main', bgcolor: 'error.light' } }}>
                   <LogoutIcon />
                 </IconButton>
               </Tooltip>
@@ -83,7 +87,7 @@ function AppContent({ toggleTheme, mode }) {
         </Container>
       </AppBar>
 
-      <Box component="main" sx={{ flexGrow: 1, py: 4 }}>
+      <Box component="main" sx={{ flexGrow: 1, py: 8 }}>
         <Container maxWidth="xl">
           <Products openCart={() => setCartOpen(true)} />
         </Container>
