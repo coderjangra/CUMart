@@ -1,13 +1,13 @@
 {
   "files": {
     "main.css": "/CUMart/static/css/main.3a820ee4.css",
-    "main.js": "/CUMart/static/js/main.3f029f8c.js",
+    "main.js": "/CUMart/static/js/main.f83c9fb0.js",
     "index.html": "/CUMart/index.html",
     "main.3a820ee4.css.map": "/CUMart/static/css/main.3a820ee4.css.map",
-    "main.3f029f8c.js.map": "/CUMart/static/js/main.3f029f8c.js.map"
+    "main.f83c9fb0.js.map": "/CUMart/static/js/main.f83c9fb0.js.map"
   },
   "entrypoints": [
     "static/css/main.3a820ee4.css",
-    "static/js/main.3f029f8c.js"
+    "static/js/main.f83c9fb0.js"
   ]
 }
