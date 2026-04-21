@@ -19,28 +19,28 @@ function Login() {
 
   return (
     <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '100vh', p: 3 }}>
-      <Card sx={{ maxWidth: 400, width: '100%', p: 4, borderRadius: 4, textAlign: 'center' }}>
-        <Box display="flex" justifyContent="center" mb={3}>
-          <Box sx={{ bgcolor: 'rgba(59, 130, 246, 0.15)', p: 1.5, borderRadius: '50%' }}>
-            <LockOutlinedIcon color="primary" sx={{ fontSize: 32 }} />
+      <Card sx={{ maxWidth: 450, width: '100%', p: 5, borderRadius: 5, textAlign: 'center' }}>
+        <Box display="flex" justifyContent="center" mb={4}>
+          <Box sx={{ bgcolor: 'rgba(96, 165, 250, 0.1)', p: 2, borderRadius: '50%' }}>
+            <LockOutlinedIcon color="primary" sx={{ fontSize: 36 }} />
           </Box>
         </Box>
         
-        <Typography variant="h4" color="white" gutterBottom fontWeight="700">
+        <Typography variant="h3" color="white" gutterBottom fontWeight="800">
           CUMart
         </Typography>
-        <Typography variant="body1" color="text.secondary" mb={4}>
-          Login to continue shopping
+        <Typography variant="body1" color="text.secondary" mb={5}>
+          Login to continue your campus shopping
         </Typography>
 
         {error && (
-          <Alert severity="error" sx={{ mb: 3, borderRadius: 2 }}>
+          <Alert severity="error" sx={{ mb: 4, borderRadius: 2 }}>
             {error}
           </Alert>
         )}
 
         <form onSubmit={handleSubmit}>
-          <Box display="flex" flexDirection="column" gap={2}>
+          <Box display="flex" flexDirection="column" gap={3}>
             <TextField
               label="Username"
               variant="outlined"
@@ -64,14 +64,14 @@ function Login() {
               color="primary"
               fullWidth
               size="large"
-              sx={{ mt: 2, py: 1.5 }}
+              sx={{ mt: 2, py: 1.8, fontSize: '1.05rem' }}
             >
-              Login
+              Sign In
             </Button>
           </Box>
         </form>
 
-        <Typography variant="caption" color="text.secondary" display="block" mt={3}>
+        <Typography variant="caption" color="text.secondary" display="block" mt={4}>
           Hint: Password is 1234
         </Typography>
       </Card>

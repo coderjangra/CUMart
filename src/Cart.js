@@ -31,49 +31,49 @@ function Cart({ isOpen, closeCart }) {
         onClose={closeCart}
         PaperProps={{
           sx: {
-            width: { xs: '100%', sm: 400 },
-            bgcolor: 'rgba(5, 8, 15, 0.95)',
-            backdropFilter: 'blur(24px)',
-            borderLeft: '1px solid rgba(255,255,255,0.05)'
+            width: { xs: '100%', sm: 480 },
+            bgcolor: 'rgba(11, 15, 25, 0.95)',
+            backdropFilter: 'blur(30px)',
+            borderLeft: '1px solid rgba(255,255,255,0.08)'
           }
         }}
       >
-        <Box p={3} display="flex" justifyContent="space-between" alignItems="center">
-          <Typography variant="h5" color="white" fontWeight="700">Your Cart</Typography>
-          <IconButton onClick={closeCart} sx={{ color: 'text.secondary' }}>
+        <Box p={4} display="flex" justifyContent="space-between" alignItems="center">
+          <Typography variant="h4" color="white" fontWeight="800">Your Cart</Typography>
+          <IconButton onClick={closeCart} sx={{ color: 'text.secondary', '&:hover': { color: 'white', bgcolor: 'rgba(255,255,255,0.1)' } }}>
             <CloseIcon />
           </IconButton>
         </Box>
-        <Divider sx={{ borderColor: 'rgba(255,255,255,0.05)' }} />
+        <Divider sx={{ borderColor: 'rgba(255,255,255,0.08)' }} />
 
-        <Box flexGrow={1} overflow="auto" p={3}>
+        <Box flexGrow={1} overflow="auto" p={4}>
           {cart.length === 0 ? (
-            <Box display="flex" flexDirection="column" alignItems="center" justifyContent="center" height="100%" opacity={0.5}>
-              <Typography variant="h2" mb={2}>🛒</Typography>
-              <Typography variant="h6" color="text.secondary">Your cart is empty</Typography>
+            <Box display="flex" flexDirection="column" alignItems="center" justifyContent="center" height="100%" opacity={0.6}>
+              <Typography variant="h1" mb={3}>🛒</Typography>
+              <Typography variant="h5" color="text.secondary" fontWeight="600">Your cart is empty</Typography>
             </Box>
           ) : (
             <List disablePadding>
               {cart.map(item => (
-                <ListItem key={item.id} disablePadding sx={{ flexDirection: 'column', alignItems: 'stretch', mb: 3 }}>
-                  <Box display="flex" justifyContent="space-between" mb={1}>
-                    <Typography variant="subtitle1" color="white" fontWeight="600">{item.name}</Typography>
-                    <Typography variant="subtitle1" color="primary.light" fontWeight="bold">₹{item.price * item.qty}</Typography>
+                <ListItem key={item.id} disablePadding sx={{ flexDirection: 'column', alignItems: 'stretch', mb: 4, p: 3, bgcolor: 'rgba(255,255,255,0.02)', borderRadius: 3, border: '1px solid rgba(255,255,255,0.05)' }}>
+                  <Box display="flex" justifyContent="space-between" mb={2}>
+                    <Typography variant="h6" color="white" fontWeight="700">{item.name}</Typography>
+                    <Typography variant="h6" color="primary.light" fontWeight="800">₹{(item.price * item.qty).toLocaleString("en-IN")}</Typography>
                   </Box>
                   <Box display="flex" justifyContent="space-between" alignItems="center">
-                    <Typography variant="body2" color="text.secondary">₹{item.price} each</Typography>
+                    <Typography variant="body1" color="text.secondary">₹{item.price.toLocaleString("en-IN")} each</Typography>
                     
-                    <Box display="flex" alignItems="center" gap={1} bgcolor="rgba(255,255,255,0.05)" borderRadius={2} p={0.5}>
-                      <IconButton size="small" onClick={() => dispatch(decrementQty(item.id))} color="primary">
+                    <Box display="flex" alignItems="center" gap={1.5} bgcolor="rgba(0,0,0,0.3)" borderRadius={3} p={0.5} border="1px solid rgba(255,255,255,0.05)">
+                      <IconButton size="small" onClick={() => dispatch(decrementQty(item.id))} color="primary" sx={{ bgcolor: 'rgba(96, 165, 250, 0.1)' }}>
                         <RemoveIcon fontSize="small" />
                       </IconButton>
-                      <Typography color="white" minWidth={20} textAlign="center">{item.qty}</Typography>
-                      <IconButton size="small" onClick={() => dispatch(addToCart(item))} color="primary">
+                      <Typography color="white" minWidth={24} textAlign="center" fontWeight="bold" fontSize="1.1rem">{item.qty}</Typography>
+                      <IconButton size="small" onClick={() => dispatch(addToCart(item))} color="primary" sx={{ bgcolor: 'rgba(96, 165, 250, 0.1)' }}>
                         <AddIcon fontSize="small" />
                       </IconButton>
                     </Box>
 
-                    <IconButton size="small" color="error" onClick={() => dispatch(removeFromCart(item.id))}>
+                    <IconButton size="small" color="error" onClick={() => dispatch(removeFromCart(item.id))} sx={{ bgcolor: 'rgba(248, 113, 113, 0.1)', '&:hover': { bgcolor: 'rgba(248, 113, 113, 0.2)' } }}>
                       <DeleteIcon fontSize="small" />
                     </IconButton>
                   </Box>
@@ -84,15 +84,15 @@ function Cart({ isOpen, closeCart }) {
         </Box>
 
         {cart.length > 0 && (
-          <Box p={3} borderTop="1px solid rgba(255,255,255,0.05)" bgcolor="rgba(0,0,0,0.2)">
-            <Box display="flex" justifyContent="space-between" alignItems="center" mb={3}>
-              <Typography variant="h6" color="text.secondary">Total</Typography>
-              <Typography variant="h4" color="white" fontWeight="700">₹{total}</Typography>
+          <Box p={4} borderTop="1px solid rgba(255,255,255,0.08)" bgcolor="rgba(15, 22, 38, 0.8)">
+            <Box display="flex" justifyContent="space-between" alignItems="center" mb={4}>
+              <Typography variant="h5" color="text.secondary">Total</Typography>
+              <Typography variant="h3" color="white" fontWeight="800">₹{total.toLocaleString("en-IN")}</Typography>
             </Box>
-            <Button variant="contained" color="primary" fullWidth size="large" onClick={handleOrder} sx={{ mb: 2 }}>
+            <Button variant="contained" color="primary" fullWidth size="large" onClick={handleOrder} sx={{ mb: 2, py: 1.8, fontSize: '1.1rem' }}>
               Place Order
             </Button>
-            <Button variant="outlined" color="error" fullWidth onClick={() => dispatch(clearCart())}>
+            <Button variant="outlined" color="error" fullWidth onClick={() => dispatch(clearCart())} sx={{ py: 1.5, fontSize: '1rem' }}>
               Clear Cart
             </Button>
           </Box>
