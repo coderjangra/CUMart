@@ -25,32 +25,16 @@ function Products({ openCart }) {
       {/* Premium Header Area */}
       <Box 
         display="flex" 
-        flexDirection={{ xs: 'column', md: 'row' }} 
-        justifyContent="space-between" 
-        alignItems={{ xs: 'flex-start', md: 'center' }} 
-        mb={8} 
+        flexDirection="column" 
+        mb={6} 
         mt={4}
-        gap={4}
       >
-        <Box>
-          <Typography variant="h3" color="text.primary" gutterBottom>
-            The Collection
-          </Typography>
-          <Typography variant="body1" color="text.secondary" sx={{ maxWidth: 500, fontSize: '1.1rem' }}>
-            Discover our curated selection of premium university essentials, perfectly crafted for your daily workflow.
-          </Typography>
-        </Box>
-
-        <Button 
-          variant="contained" 
-          color="primary" 
-          size="large" 
-          onClick={openCart}
-          startIcon={<AddShoppingCartIcon />}
-          sx={{ px: 4, py: 2, borderRadius: '16px', boxShadow: '0 8px 24px rgba(0,0,0,0.12)' }}
-        >
-          View Bag {cartCount > 0 && `(${cartCount})`}
-        </Button>
+        <Typography variant="h3" color="text.primary" gutterBottom>
+          The Collection
+        </Typography>
+        <Typography variant="body1" color="text.secondary" sx={{ maxWidth: 500, fontSize: '1.1rem' }}>
+          Discover our curated selection of premium university essentials, perfectly crafted for your daily workflow.
+        </Typography>
       </Box>
 
       {/* Elegant Search & Filter Bar */}
