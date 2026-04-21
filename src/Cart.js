@@ -1,11 +1,12 @@
 import { useDispatch, useSelector } from "react-redux";
 import { addToCart, decrementQty, removeFromCart, clearCart } from "./cartSlice";
 import { useState } from "react";
-import { Drawer, Box, Typography, IconButton, Button, Divider, List, ListItem, Snackbar, Alert } from "@mui/material";
+import { Drawer, Box, Typography, IconButton, Button, Divider, List, ListItem, Snackbar, Alert, CardMedia } from "@mui/material";
 import CloseIcon from '@mui/icons-material/Close';
 import AddIcon from '@mui/icons-material/Add';
 import RemoveIcon from '@mui/icons-material/Remove';
-import DeleteIcon from '@mui/icons-material/Delete';
+import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
+import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 
 function Cart({ isOpen, closeCart }) {
   const cart = useSelector(state => state.cart);
@@ -20,7 +21,7 @@ function Cart({ isOpen, closeCart }) {
     setTimeout(() => {
       setOrdered(false);
       closeCart();
-    }, 2000);
+    }, 2500);
   };
 
   return (
@@ -32,51 +33,69 @@ function Cart({ isOpen, closeCart }) {
         PaperProps={{
           sx: {
             width: { xs: '100%', sm: 480 },
-            bgcolor: 'rgba(11, 15, 25, 0.95)',
-            backdropFilter: 'blur(30px)',
-            borderLeft: '1px solid rgba(255,255,255,0.08)'
           }
         }}
       >
-        <Box p={4} display="flex" justifyContent="space-between" alignItems="center">
-          <Typography variant="h4" color="white" fontWeight="800">Your Cart</Typography>
-          <IconButton onClick={closeCart} sx={{ color: 'text.secondary', '&:hover': { color: 'white', bgcolor: 'rgba(255,255,255,0.1)' } }}>
+        <Box p={4} pb={3} display="flex" justifyContent="space-between" alignItems="center">
+          <Typography variant="h4" color="text.primary">Your Bag</Typography>
+          <IconButton onClick={closeCart} sx={{ bgcolor: 'rgba(0,0,0,0.04)' }}>
             <CloseIcon />
           </IconButton>
         </Box>
-        <Divider sx={{ borderColor: 'rgba(255,255,255,0.08)' }} />
+        <Divider />
 
         <Box flexGrow={1} overflow="auto" p={4}>
           {cart.length === 0 ? (
-            <Box display="flex" flexDirection="column" alignItems="center" justifyContent="center" height="100%" opacity={0.6}>
-              <Typography variant="h1" mb={3}>🛒</Typography>
-              <Typography variant="h5" color="text.secondary" fontWeight="600">Your cart is empty</Typography>
+            <Box display="flex" flexDirection="column" alignItems="center" justifyContent="center" height="100%" sx={{ color: 'text.secondary' }}>
+              <Typography variant="h1" mb={4} sx={{ opacity: 0.2 }}>🛍️</Typography>
+              <Typography variant="h6" fontWeight="600" mb={1} color="text.primary">Your bag is empty.</Typography>
+              <Typography variant="body2" textAlign="center">When you add products, they'll appear here.</Typography>
+              <Button variant="contained" color="primary" onClick={closeCart} sx={{ mt: 4, borderRadius: '16px', px: 4 }}>
+                Continue Shopping
+              </Button>
             </Box>
           ) : (
             <List disablePadding>
               {cart.map(item => (
-                <ListItem key={item.id} disablePadding sx={{ flexDirection: 'column', alignItems: 'stretch', mb: 4, p: 3, bgcolor: 'rgba(255,255,255,0.02)', borderRadius: 3, border: '1px solid rgba(255,255,255,0.05)' }}>
-                  <Box display="flex" justifyContent="space-between" mb={2}>
-                    <Typography variant="h6" color="white" fontWeight="700">{item.name}</Typography>
-                    <Typography variant="h6" color="primary.light" fontWeight="800">₹{(item.price * item.qty).toLocaleString("en-IN")}</Typography>
-                  </Box>
-                  <Box display="flex" justifyContent="space-between" alignItems="center">
-                    <Typography variant="body1" color="text.secondary">₹{item.price.toLocaleString("en-IN")} each</Typography>
-                    
-                    <Box display="flex" alignItems="center" gap={1.5} bgcolor="rgba(0,0,0,0.3)" borderRadius={3} p={0.5} border="1px solid rgba(255,255,255,0.05)">
-                      <IconButton size="small" onClick={() => dispatch(decrementQty(item.id))} color="primary" sx={{ bgcolor: 'rgba(96, 165, 250, 0.1)' }}>
-                        <RemoveIcon fontSize="small" />
-                      </IconButton>
-                      <Typography color="white" minWidth={24} textAlign="center" fontWeight="bold" fontSize="1.1rem">{item.qty}</Typography>
-                      <IconButton size="small" onClick={() => dispatch(addToCart(item))} color="primary" sx={{ bgcolor: 'rgba(96, 165, 250, 0.1)' }}>
-                        <AddIcon fontSize="small" />
-                      </IconButton>
+                <ListItem key={item.id} disablePadding sx={{ flexDirection: 'column', alignItems: 'stretch', mb: 4 }}>
+                  <Box display="flex" gap={3}>
+                    {/* Item Image */}
+                    <Box sx={{ width: 80, height: 80, borderRadius: 3, overflow: 'hidden', bgcolor: '#f4f4f5', flexShrink: 0 }}>
+                      <CardMedia component="img" image={item.image} alt={item.name} sx={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                     </Box>
+                    
+                    {/* Item Details */}
+                    <Box flexGrow={1} display="flex" flexDirection="column" justifyContent="space-between">
+                      <Box display="flex" justifyContent="space-between" alignItems="flex-start">
+                        <Box>
+                          <Typography variant="subtitle1" color="text.primary" fontWeight="700" lineHeight={1.2} mb={0.5}>{item.name}</Typography>
+                          <Typography variant="body2" color="text.secondary">₹{item.price.toLocaleString("en-IN")}</Typography>
+                        </Box>
+                        <Typography variant="subtitle1" color="text.primary" fontWeight="800">
+                          ₹{(item.price * item.qty).toLocaleString("en-IN")}
+                        </Typography>
+                      </Box>
+                      
+                      {/* Controls */}
+                      <Box display="flex" justifyContent="space-between" alignItems="center" mt={2}>
+                        <Box display="flex" alignItems="center" bgcolor="#f4f4f5" borderRadius="8px" border="1px solid rgba(0,0,0,0.05)">
+                          <IconButton size="small" onClick={() => dispatch(decrementQty(item.id))} sx={{ borderRadius: '8px' }}>
+                            <RemoveIcon fontSize="small" />
+                          </IconButton>
+                          <Typography color="text.primary" minWidth={30} textAlign="center" fontWeight="600" fontSize="0.95rem">{item.qty}</Typography>
+                          <IconButton size="small" onClick={() => dispatch(addToCart(item))} sx={{ borderRadius: '8px' }}>
+                            <AddIcon fontSize="small" />
+                          </IconButton>
+                        </Box>
 
-                    <IconButton size="small" color="error" onClick={() => dispatch(removeFromCart(item.id))} sx={{ bgcolor: 'rgba(248, 113, 113, 0.1)', '&:hover': { bgcolor: 'rgba(248, 113, 113, 0.2)' } }}>
-                      <DeleteIcon fontSize="small" />
-                    </IconButton>
+                        <IconButton size="small" color="error" onClick={() => dispatch(removeFromCart(item.id))} sx={{ color: '#ef4444', '&:hover': { bgcolor: 'rgba(239, 68, 68, 0.1)' } }}>
+                          <DeleteOutlineIcon />
+                        </IconButton>
+                      </Box>
+                    </Box>
                   </Box>
+                  {/* Subtle separator between items */}
+                  <Divider sx={{ mt: 4, borderColor: 'rgba(0,0,0,0.04)' }} />
                 </ListItem>
               ))}
             </List>
@@ -84,24 +103,38 @@ function Cart({ isOpen, closeCart }) {
         </Box>
 
         {cart.length > 0 && (
-          <Box p={4} borderTop="1px solid rgba(255,255,255,0.08)" bgcolor="rgba(15, 22, 38, 0.8)">
+          <Box p={4} bgcolor="#fafafa" borderTop="1px solid rgba(0,0,0,0.06)">
             <Box display="flex" justifyContent="space-between" alignItems="center" mb={4}>
-              <Typography variant="h5" color="text.secondary">Total</Typography>
-              <Typography variant="h3" color="white" fontWeight="800">₹{total.toLocaleString("en-IN")}</Typography>
+              <Typography variant="h6" color="text.secondary" fontWeight="500">Subtotal</Typography>
+              <Typography variant="h4" color="text.primary" fontWeight="800">₹{total.toLocaleString("en-IN")}</Typography>
             </Box>
-            <Button variant="contained" color="primary" fullWidth size="large" onClick={handleOrder} sx={{ mb: 2, py: 1.8, fontSize: '1.1rem' }}>
-              Place Order
+            <Button variant="contained" color="primary" fullWidth size="large" onClick={handleOrder} sx={{ mb: 2, py: 2, borderRadius: '16px', fontSize: '1.1rem' }}>
+              Checkout
             </Button>
-            <Button variant="outlined" color="error" fullWidth onClick={() => dispatch(clearCart())} sx={{ py: 1.5, fontSize: '1rem' }}>
-              Clear Cart
+            <Button variant="text" color="inherit" fullWidth onClick={() => dispatch(clearCart())} sx={{ py: 1.5, color: 'text.secondary' }}>
+              Clear Bag
             </Button>
           </Box>
         )}
       </Drawer>
 
-      <Snackbar open={ordered} autoHideDuration={3000} anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}>
-        <Alert severity="success" variant="filled" sx={{ borderRadius: 2 }}>
-          Order placed successfully! Thank you.
+      <Snackbar open={ordered} autoHideDuration={3000} anchorOrigin={{ vertical: 'top', horizontal: 'center' }}>
+        <Alert 
+          icon={<CheckCircleOutlineIcon fontSize="large" />}
+          severity="success" 
+          sx={{ 
+            bgcolor: '#ffffff', 
+            color: '#09090b', 
+            borderRadius: '24px', 
+            boxShadow: '0 20px 40px rgba(0,0,0,0.12)',
+            border: '1px solid rgba(0,0,0,0.08)',
+            p: 3,
+            alignItems: 'center',
+            '& .MuiAlert-icon': { color: '#10b981', mr: 2 }
+          }}
+        >
+          <Typography variant="h6" fontWeight="700" gutterBottom>Order Confirmed</Typography>
+          <Typography variant="body2" color="text.secondary">Thank you for shopping with CUMart.</Typography>
         </Alert>
       </Snackbar>
     </>
