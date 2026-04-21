@@ -120,7 +120,7 @@ function Cart({ isOpen, closeCart }) {
 
       <Snackbar open={ordered} autoHideDuration={3000} anchorOrigin={{ vertical: 'top', horizontal: 'center' }}>
         <Alert 
-          icon={<CheckCircleOutlineIcon fontSize="large" />}
+          icon={<CheckCircleIcon fontSize="large" />}
           severity="success" 
           sx={{ 
             bgcolor: '#ffffff', 
