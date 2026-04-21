@@ -5,8 +5,8 @@ import { Drawer, Box, Typography, IconButton, Button, Divider, List, ListItem, S
 import CloseIcon from '@mui/icons-material/Close';
 import AddIcon from '@mui/icons-material/Add';
 import RemoveIcon from '@mui/icons-material/Remove';
-import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
-import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
+import DeleteIcon from '@mui/icons-material/Delete';
+import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 
 function Cart({ isOpen, closeCart }) {
   const cart = useSelector(state => state.cart);
@@ -89,7 +89,7 @@ function Cart({ isOpen, closeCart }) {
                         </Box>
 
                         <IconButton size="small" color="error" onClick={() => dispatch(removeFromCart(item.id))} sx={{ color: '#ef4444', '&:hover': { bgcolor: 'rgba(239, 68, 68, 0.1)' } }}>
-                          <DeleteOutlineIcon />
+                          <DeleteIcon />
                         </IconButton>
                       </Box>
                     </Box>
