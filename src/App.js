@@ -68,15 +68,14 @@ function AppContent({ toggleTheme, mode }) {
                 </IconButton>
               </Tooltip>
 
-              <Box display="flex" alignItems="center" gap={1.5} sx={{ display: { xs: 'none', sm: 'flex' }, py: 0.5, px: 2, bgcolor: 'action.hover', borderRadius: '50px', border: '1px solid', borderColor: 'divider' }}>
+              <Box display="flex" alignItems="center" gap={1.5} sx={{ display: { xs: 'none', sm: 'flex' }, py: 0.5, px: 2, bgcolor: 'action.hover', borderRadius: '50px', border: '1px solid', borderColor: 'divider', height: 44 }}>
                 <Avatar sx={{ bgcolor: 'text.primary', color: 'background.default', width: 28, height: 28, fontSize: '0.85rem', fontWeight: 700 }}>
                   {userName.charAt(0).toUpperCase()}
                 </Avatar>
-                <Typography variant="body2" fontWeight="600" color="text.primary">
+                <Typography variant="body2" fontWeight="600" color="text.primary" sx={{ display: 'flex', alignItems: 'center', height: '100%', mt: '2px' }}>
                   {userName}
                 </Typography>
-              </Box>
-              
+              </Box>              
               <Tooltip title="Sign Out">
                 <IconButton onClick={logout} sx={{ color: 'text.secondary', '&:hover': { color: 'error.main', bgcolor: 'error.light' } }}>
                   <LogoutIcon />
