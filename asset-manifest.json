@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/CUMart/static/css/main.3a820ee4.css",
+    "main.js": "/CUMart/static/js/main.379628ab.js",
+    "index.html": "/CUMart/index.html",
+    "main.3a820ee4.css.map": "/CUMart/static/css/main.3a820ee4.css.map",
+    "main.379628ab.js.map": "/CUMart/static/js/main.379628ab.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.3a820ee4.css",
+    "static/js/main.379628ab.js"
+  ]
+}
