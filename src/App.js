@@ -3,64 +3,66 @@ import { AuthContext } from "./AuthContext";
 import Login from "./Login";
 import Products from "./Products";
 import Cart from "./Cart";
+import { AppBar, Toolbar, Typography, Box, IconButton, Avatar, Tooltip, Container } from "@mui/material";
+import LogoutIcon from '@mui/icons-material/Logout';
+import StorefrontIcon from '@mui/icons-material/Storefront';
 
 function App() {
   const { isLoggedIn, userName, logout } = useContext(AuthContext);
   const [cartOpen, setCartOpen] = useState(false);
-  const [dark, setDark] = useState(() => {
-    const saved = localStorage.getItem("cumart-theme");
-    if (saved) return saved === "dark";
-    return window.matchMedia("(prefers-color-scheme: dark)").matches;
-  });
-
-  useEffect(() => {
-    document.documentElement.setAttribute("data-theme", dark ? "dark" : "light");
-    localStorage.setItem("cumart-theme", dark ? "dark" : "light");
-  }, [dark]);
 
   if (!isLoggedIn) {
     return <Login />;
   }
 
   return (
-    <>
-      <header className="top-header">
-        <div className="top-header-inner">
-          <div>
-            <span className="brand-name">CUMart</span>
-            <span className="brand-sub">Your campus shopping hub</span>
-          </div>
+    <Box sx={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
+      <AppBar position="sticky">
+        <Toolbar sx={{ justifyContent: 'space-between', px: { xs: 2, sm: 4 }, py: 1 }}>
+          <Box display="flex" alignItems="center" gap={2}>
+            <Avatar sx={{ bgcolor: 'rgba(59, 130, 246, 0.2)', color: 'primary.main' }}>
+              <StorefrontIcon />
+            </Avatar>
+            <Box>
+              <Typography variant="h5" fontWeight="800" color="white" lineHeight={1.2}>
+                CU<span style={{ color: '#3b82f6' }}>Mart</span>
+              </Typography>
+              <Typography variant="caption" color="text.secondary" fontWeight="bold">
+                Campus Shopping Hub
+              </Typography>
+            </Box>
+          </Box>
 
-          <div className="top-actions">
-            <label className="theme-toggle" title={dark ? "Switch to light mode" : "Switch to dark mode"}>
-              <input
-                type="checkbox"
-                checked={dark}
-                onChange={() => setDark(d => !d)}
-              />
-              <span className="theme-toggle-track">
-                <span className="theme-toggle-thumb">{dark ? "🌙" : "☀️"}</span>
-              </span>
-            </label>
+          <Box display="flex" alignItems="center" gap={3}>
+            <Box display="flex" alignItems="center" gap={1.5} sx={{ display: { xs: 'none', sm: 'flex' } }}>
+              <Avatar sx={{ bgcolor: 'primary.main', width: 32, height: 32, fontSize: '1rem', fontWeight: 'bold' }}>
+                {userName.charAt(0).toUpperCase()}
+              </Avatar>
+              <Typography variant="body1" fontWeight="600" color="white">
+                {userName}
+              </Typography>
+            </Box>
+            
+            <Tooltip title="Logout">
+              <IconButton onClick={logout} sx={{ bgcolor: 'rgba(239, 68, 68, 0.1)', color: 'error.main', '&:hover': { bgcolor: 'rgba(239, 68, 68, 0.2)' } }}>
+                <LogoutIcon />
+              </IconButton>
+            </Tooltip>
+          </Box>
+        </Toolbar>
+      </AppBar>
 
-            <div className="user-pill">
-              {userName.charAt(0).toUpperCase()}
-            </div>
-            <span className="username">{userName}</span>
-            <button className="logout-btn" onClick={logout}>
-              Logout
-            </button>
-          </div>
-        </div>
-      </header>
-
-      <Products openCart={() => setCartOpen(true)} />
+      <Box component="main" sx={{ flexGrow: 1, p: { xs: 3, sm: 6 }, mt: 2 }}>
+        <Container maxWidth="xl">
+          <Products openCart={() => setCartOpen(true)} />
+        </Container>
+      </Box>
 
       <Cart
         isOpen={cartOpen}
         closeCart={() => setCartOpen(false)}
       />
-    </>
+    </Box>
   );
 }
 
