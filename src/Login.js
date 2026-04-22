@@ -1,6 +1,6 @@
 import React, { useContext, useState } from "react";
 import { AuthContext } from "./AuthContext";
-import { Box, Card, Typography, TextField, Button, Alert, Container, CircularProgress } from "@mui/material";
+import { Box, Typography, TextField, Button, Alert, CircularProgress } from "@mui/material";
 
 function Login() {
   const { login } = useContext(AuthContext);
